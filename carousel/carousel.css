@@ -35,18 +35,21 @@ input {
 }
 
 .img-box {
+    height: 402px;
     position: absolute;
     top: 0;
-    left: 0;
-    /*transition: 1s;*/
+    left: -200px;
+    transition: 1s;
 }
 
 .img-box img {
-    /*transition: 1s;*/
-    float: left;
+    transition: 1s;
+    position: absolute;
+    top: 0;
+    opacity: 0;
 }
 
-.img-box img:first-child {
+.img-box img:nth-child(2) {
     opacity: 1;
 }
 
