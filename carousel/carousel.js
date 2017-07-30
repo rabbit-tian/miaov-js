@@ -93,6 +93,9 @@ window.onload = function(){
     for (var i = 0; i < end; i++){
         dots[i].onclick = function (){
             if(this.className == 'active') return; //优化
+            if(!isTransition){ //如果当前没有transition特效
+                turnTransitionOn();
+            }
             var currentIndex = this.getAttribute('data-index');
             imgs[index].style.opacity = 0;
             index = parseInt(currentIndex) + 1;
