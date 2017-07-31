@@ -43,7 +43,6 @@ window.onload = function() {
     // 给 item 下 每一个 li  循环添加 点击事件
 
     for ( var i = 0; i < lis.length; i++) {
-        lis[i].index = i;
         lis[i].red = false;
         lis[i].onmouseover = function(){
             if(this.red) return;
