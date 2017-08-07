@@ -41,13 +41,13 @@ body {
     height: 30px;
     background-color: #de4a63;
     border-radius: 5px;
-    display: inline-block;
-    vertical-align: 15px;
+    vertical-align: bottom;
     margin-left: 10px;
     color: #fff;
     line-height: 30px;
     text-align: center;
     visibility: hidden;
+    display: inline-block;
 }
 
 .star {

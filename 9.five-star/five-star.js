@@ -1,68 +1,64 @@
 window.onload = function(){
-    var starBox = document.querySelector('.stars')
     var stars = document.querySelectorAll('.star');
     var feedback = document.querySelector('.feedback');
     var len = stars.length;
-    var num = 0;
+    var starCurrSite = -1;
 
     var textArr = ['极差','一般','不错','推荐','力推'];
 
-    starBox.onmouseover = function(){
-        if(feedback.choose) return;
-        feedback.style.visibility = 'visible';
-    };
-
-    starBox.onmouseout = function(){
-        if(feedback.choose) return;
-        feedback.style.visibility = 'hidden';
-    };
-
-
     for (var i = 0; i < len; i++){
         stars[i].index = i;
-        stars[i].choose = false;
 
-        stars[i].onclick = function(){
-            if(num <= 2) {
-                for (var i = 0; i < num; i++){
-                    stars[i].src = 'img/yawp.jpg';
-                    stars[i].choose = true;
-                }
-            }else if(num>2){
-                for (var i = 0; i < num; i++){
-                    stars[i].src = 'img/satisfied.jpg';
-                    stars[i].choose = true;
-                }
-            }
-
-            feedback.choose = true;
-            feedback.innerHTML = textArr[this.index];
-            feedback.visibility = 'visible';
-        };
-
+        //添加onmouseover事件
+        // 不管是否有星星被点击, 鼠标移入时 永远是将当前和之前的星星变色，之后的星星还原
         stars[i].onmouseover = function () {
-            num = this.index + 1;
-            if(num <= 2) {
-                for (var i = 0; i < num; i++){
+            for(var i = 0; i <= this.index; i++) {
+                if (this.index < 2) {
                     stars[i].src = 'img/yawp.jpg';
-                }
-            }else if(num>2){
-                for (var i = 0; i < num; i++){
+                } else {
                     stars[i].src = 'img/satisfied.jpg';
                 }
             }
+
+           for(var j = this.index + 1; j < len; j++){ //然后将当前之后的星星还原
+               stars[j].src='img/grey.jpg';
+           }
+
+            feedback.style.visibility = 'visible';
             feedback.innerHTML = textArr[this.index];
+        };
+
+        //添加onmouseout事件
+        // 不管是否有星星被点击, 鼠标移出时 永远是将标记和之前的星星变色，之后的星星还原
+        stars[i].onmouseout = function () {
+
+            for(var j = 0; j <= starCurrSite; j++){
+                if(starCurrSite<2){
+                    stars[j].src='img/yawp.jpg';
+                }else{
+                    stars[j].src='img/satisfied.jpg';
+                }
+            }
+
+            for(var i = starCurrSite+1; i < len; i++){
+                stars[i].src='img/grey.jpg';
+            }
+
+            if(starCurrSite>-1){
+                feedback.innerHTML = textArr[starCurrSite];
+            }else{
+                feedback.style.visibility = 'hidden';
+            }
+
 
         };
 
-        stars[i].onmouseout = function () {
-            if(this.choose) return;
-            num = this.index + 1;
-            for (var i = 0; i < num; i++){
-                if(stars[i].choose){
-                    continue;
-                }
-                stars[i].src = 'img/grey.jpg';
+        //添加点击事件
+        stars[i].onclick = function(){
+            if(starCurrSite == this.index){
+                starCurrSite = -1;
+            }else {
+                starCurrSite = this.index;
             }
         };
     }
