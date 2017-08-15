@@ -21,7 +21,9 @@ window.onload = function(){
     }
 
     cube.style.transform = 'rotateX(90deg) rotateY(90deg)';
+
     rotateStart();
+
 
     function rotateStart() {
         timer = setInterval(function(){
