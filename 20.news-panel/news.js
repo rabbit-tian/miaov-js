@@ -132,7 +132,7 @@ window.onload = function(){
 
 
     //循环切换新闻栏目播放新闻
-    autoPlayTab(0);
+    autoPlayTab(0,true);
 
 
 
@@ -141,13 +141,13 @@ window.onload = function(){
         (function(index){
             tab[index].onmouseover = function(ev){
                 var ev = ev||event;
-                autoPlayTab(index);
+                autoPlayTab(index,false);
                 ev.stopPropagation();
             };
 
             tab[index].onmouseout = function(){
                 lastTabIndex = index;
-                lastNewsIndex = -1;
+                // lastNewsIndex = -1;
             }
         })(i);
     }
@@ -159,7 +159,7 @@ window.onload = function(){
     };
 
     panel.onmouseout = function(){
-        autoPlayNews(lastNewsIndex+1);
+        autoPlayNews(lastNewsIndex+1,true);
     };
 
 
@@ -234,18 +234,18 @@ window.onload = function(){
     }
 
     //自动切换tab
-    function autoPlayTab(num){
+    function autoPlayTab(num,loop){ //loop == true, 循环播放所有tab的news, loop == false，只循环播放当前tab里面的news
 
         highlightTab(num);
 
         fillNews(columnName[num]);
 
-        autoPlayNews(lastNewsIndex+1);
+        autoPlayNews(lastNewsIndex+1,loop);
 
     }
     
     //自动高亮每一条新闻
-    function autoPlayNews(index){
+    function autoPlayNews(index,loop){
         clearInterval(newslist.timer);
 
 
@@ -259,7 +259,10 @@ window.onload = function(){
                 }
 
                 lastNewsIndex = 0;
-                autoPlayTab(lastTabIndex%tab.length);
+                if(loop){
+                    autoPlayTab(lastTabIndex%tab.length, loop);
+                }
+
             }
 
 
