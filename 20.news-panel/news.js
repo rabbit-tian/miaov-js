@@ -100,7 +100,9 @@ window.onload = function(){
 
     //获取元素
     var panel = document.querySelector('.panel'); //panel
+
     var tabs = document.querySelector('.tabs'); //tabs
+
     var tab = tabs.getElementsByTagName('li'); //tab
 
     var newslist = document.querySelector('.list'); //新闻列表
@@ -119,7 +121,7 @@ window.onload = function(){
 
 
 
-    var tabIndex = 0;
+    var tabIndex = 0; //默认tab位置
 
 
     //初始化新闻界面
@@ -131,7 +133,7 @@ window.onload = function(){
     fillNews(columnName[0]);
 
 
-    //循环切换新闻栏目播放新闻
+    //循环切换新闻栏目播放新闻：默认播放第一屏，滚动播放
     autoPlayTab(0,true);
 
 
@@ -141,7 +143,7 @@ window.onload = function(){
         (function(index){
             tab[index].onmouseover = function(ev){
                 var ev = ev||event;
-                autoPlayTab(index,false);
+                autoPlayTab(index,false); //移入tab，只循环播放当前屏新闻
                 ev.stopPropagation();
             };
 
@@ -258,13 +260,13 @@ window.onload = function(){
                     lastTabIndex = 0;
                 }
 
-                lastNewsIndex = 0;
+                index = 0;
+
                 if(loop){
                     autoPlayTab(lastTabIndex%tab.length, loop);
                 }
 
             }
-
 
             highlightNews(index%items.length); //index%items.length = [0,1,2]
 
