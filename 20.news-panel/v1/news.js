@@ -253,7 +253,7 @@ window.onload = function(){
 
         newslist.timer = setInterval(function(){
 
-            if(index == 3){
+            if(index > items.length - 1){
 
                 lastTabIndex++;
                 if(lastTabIndex > tab.length){
