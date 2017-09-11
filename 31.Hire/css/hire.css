@@ -56,11 +56,11 @@ body{
     position: relative;
 }
 
-.info li:hover {
+.hire .info li:hover {
     background: #1c1e25;
 }
 
-.info li:hover:before{
+.hire .info li:hover:before{
     content: '';
     display: block;
     width: 3px;
@@ -71,7 +71,7 @@ body{
     top: 20px;
 }
 
-.info li:hover .num {
+.hire .info li:hover .num {
     color: #8f2437;
 }
 
