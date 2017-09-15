@@ -78,8 +78,11 @@ function generateDom(data,node){
             a.href='javascript:;';
             a.onclick = function(){
                 //★★★★★
+                //点击后高亮显示
                 select(this);
+                //添加筛选标签
                 addFilter(this);
+                //过滤数据
                 filterData(shopsList,filterJson);
             };
 
