@@ -4,28 +4,29 @@ init();
 ///////////////////函数////////////////////////////
 function init(){
     //获取整个form
-    var form = document.querySelector('.form');
+    window.form = document.querySelector('.form');
 
     //获取table
-    var table = document.querySelector('.table');
-
-    //获取添加按钮
-    var addBtn = document.querySelector('.add');
+    window.table = document.querySelector('.table');
 
     //声明一个变量来保存已经向table里添加的行数
-    var num = 0;
+    window.num = 0;
 
     //声明一个变量来保存table中每一行checkbox选中的个数
-    var n = 0;
+    window.n = 0;
 
     //性别模拟框功能
     genderSelect(form);
 
+    //获取添加按钮
+    var addBtn = document.querySelector('.add');
+
     //添加按钮点击事件
     addBtn.onclick = function(){
+
         //如果通过验证，往table里添加信息
         if(validation(form)){
-            //往table中添加form表单信息
+            //往table中添加一行form表单信息
             addInfo(form,table);
         }
     };
@@ -44,8 +45,8 @@ function genderSelect(form){
     //性别模拟 options div
     var genderOptions = form.querySelector('.gender-options');
 
-    genderOptions.expend = false; //自定义属性 - 状态:是否展开
-    genderOptions.isClick = false; //自定义属性 - 开关: 是否点击
+    // genderOptions.expend = false; //自定义属性 - 状态:是否展开
+    // genderOptions.isClick = false; //自定义属性 - 开关: 是否点击
 
     //性别hidden,将用户选中的性别放入到hidden input的value中
     var genderHidden = form.querySelector('.gender-hidden');
@@ -113,13 +114,13 @@ function validation(form){
     var pass = true;
 
     //姓名验证
-    if(name.trim()==''){
+    if(name.trim()===''){
         nameError.innerHTML = '姓名不能为空';
         pass = false;
     }
 
     //年龄验证
-    if(age.trim()==''){
+    if(age.trim()===''){
         ageError.innerHTML = '年龄不能为空';
         pass = false;
     }else if(!age.trim().match(/^\d{1,2}$/)){
@@ -128,7 +129,7 @@ function validation(form){
     }
 
     //性别验证
-    if(gender.trim()==''){
+    if(gender.trim()===''){
         genderError.innerHTML = '性别不能为空';
         pass = false;
     }
@@ -139,13 +140,13 @@ function validation(form){
 
 //添加信息
 function addInfo(form,table){
-
     var tbody = table.tBodies[0];
     var checkAll = table.querySelector('.all');
 
     var name = form.querySelector('#name');
     var age = form.querySelector('#age');
     var gender = form.querySelector('#gender');
+    var genderSelect = form.querySelector('.gender-select');
 
     //创建新的一行添加到table的body中
     tbody.insertRow(num);
@@ -158,8 +159,32 @@ function addInfo(form,table){
 
     //创建第0个单元格放checkbox
     tbody.rows[num].insertCell(0);
-    tbody.rows[num].cells[0].innerHTML = '<span class="checkbox"></span></td>';
-    tbody.rows[num].cells[0].ischecked = false; //未选中状态
+
+    var span = document.createElement('span');
+    span.className = 'checkbox';
+
+    //给span添加点击事件
+    span.onclick = function(){
+        if(this.ischecked){ //取消选择
+            this.ischecked = false;
+            this.classList.remove('checked');
+            n--;
+        }else{//选择
+            this.ischecked = true;
+            this.classList.add('checked');
+            n++;
+        }
+
+        if(n === tbody.rows.length){
+            checkAll.ischecked = true;
+            checkAll.classList.add('checked');
+        }else{
+            checkAll.ischecked = false;
+            checkAll.classList.remove('checked');
+        }
+    };
+
+    tbody.rows[num].cells[0].appendChild(span);
 
     //创建第1个单元格放ID
     tbody.rows[num].insertCell(1);
@@ -259,8 +284,7 @@ function addOperation(row){
     //删除
     del.onclick = function(){
         var thisTr = this.parentNode.parentNode; //拿到当前tr
-        var checkAll = table.querySelector('.all');
-        tbody.removeChild(thisTr);
+        tbody.removeChild(thisTr); //删除当前行
 
         num--; //行数-1
 
@@ -269,10 +293,17 @@ function addOperation(row){
             n--;
         }
 
+        var checkAll = table.querySelector('.all'); //拿到全选框
+
         //如果n和row的行数相等，证明所有行的checkbox都选中了，那么全选
         if(n==tbody.rows.length){
             checkAll.ischecked = true;
             checkAll.classList.add('checked');
+        }
+
+        if(tbody.rows.length==0&&checkAll.ischecked){
+            checkAll.ischecked = false;
+            checkAll.classList.remove('checked');
         }
         //将每一行id重新排序
         reOrder(tbody);
@@ -289,7 +320,7 @@ function reOrder(tbody){
     }
 }
 
-// table的checkbox选中、全选功能
+// table的checkbox全选功能
 function addSelectEvent(table){
     var tbody = table.tBodies[0];
     var checkAll = table.querySelector('.all');
@@ -318,33 +349,4 @@ function addSelectEvent(table){
             }
         }
     };
-
-    for(var i = 0; i < rows.length; i++){
-        checkboxs[i].onclick = function(){
-            if(this.ischecked){ //取消选择
-                this.ischecked = false;
-                this.classList.remove('checked');
-                n--;
-            }else{//选择
-                this.ischecked = true;
-                this.classList.add('checked');
-                n++;
-            }
-
-            if(n==rows.length){
-                checkAll.ischecked = true;
-                checkAll.classList.add('checked');
-            }else{
-                checkAll.ischecked = false;
-                checkAll.classList.remove('checked');
-            }
-        }
-    }
 }
-
-
-
-
-
-
-
