@@ -73,7 +73,7 @@ window.onload= function () {
 
     var option = document.querySelector('#option');
 
-    document.onkeydown = function(ev){
+    document.onkeyup = function(ev){
 
         //enter键
         if(ev.keyCode===13&&!event.shiftKey&&!event.ctrlKey&&option.value==='enter'){
