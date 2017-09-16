@@ -19,6 +19,11 @@ var imgsData = [
         "url":"img/5.jpg",
         "alt":"5.jpg"
     }
+    // ,
+    // {
+    //     "url":"img/6.jpg",
+    //     "alt":"6.jpg"
+    // }
 ];
 
 //----根据data生成图片---//
@@ -39,7 +44,7 @@ var preDir = 'next';
 
 //全局获取所有的图片
 var imgs = carousel.querySelectorAll('img');
-var len = imgs.length - 1;
+var len = imgs.length;
 
 //声明一个变量来保存事件状态
 var isclick = false;
@@ -164,7 +169,7 @@ function moveImg(attr,dis,dir){
     var maxIndexImg = imgs[orderArr.indexOf(Math.max.apply(Math, orderArr))];
 
     //将这张图片按给定的距离和方向移动
-    MTween(maxIndexImg,dis,1000,attr,'linear',function(){
+    MTween(maxIndexImg,dis,500,attr,'linear',function(){
 
         //移动完之后
         //重新设定所有img的z-index值
@@ -204,7 +209,7 @@ function resetIndex(){
 
     for(var i = 0; i < len; i++){
         dis = len - orderArr[i];
-        if(dis == 0) dis = 5;
+        if(dis == 0) dis = len;
         temp.push(dis);
     }
 
