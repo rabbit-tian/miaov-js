@@ -204,7 +204,6 @@ function reOrderIndex(){
 // example: pre -> next [5,1,2,3,4] -> [5,4,3,2,1] ...
 function resetIndex(){
     var temp = [];
-    var len = orderArr.length;
     var dis = 0;
 
     for(var i = 0; i < len; i++){
