@@ -17,22 +17,22 @@ function init(obj){
         // console.log(1);
 
         var target = ev.target;
-        if(target.tagName.toLowerCase()==='input'){
+        var html = '';
+
+        if(target.nodeName.toLowerCase()==='input'){
             if(textarea.value===''){
                 alert('请输入内容');
             }else{
                 html = `<li><span>${textarea.value}</span><a href="javascript:;">删除</a></li>`;
                 content.innerHTML += html;
                 textarea.value = '';
-
             }
         }
 
 
-        if(target.tagName.toLowerCase()==='a'){
+        if(target.nodeName.toLowerCase()==='a'){
             target.parentNode.remove();
         }
-
 
     });
 }
