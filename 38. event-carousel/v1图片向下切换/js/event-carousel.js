@@ -70,18 +70,22 @@ document.addEventListener('keydown',function(ev){
     //键盘左键
     if(ev.keyCode === 37){
         moveImg('left',-w);
+        ev.preventDefault();
     }
     //键盘上键
     if(ev.keyCode === 38){
         moveImg('top',-h);
+        ev.preventDefault();
     }
     //键盘右键
     if(ev.keyCode === 39){
         moveImg('left',w);
+        ev.preventDefault();
     }
     //键盘下键
     if(ev.keyCode === 40){
         moveImg('top',h);
+        ev.preventDefault();
     }
 });
 
@@ -90,41 +94,51 @@ document.addEventListener('keydown',function(ev){
 
 //------------------- 鼠标拖拽事件 ---------------------//
 
+    // carousel.onmousedown = function(ev){
 
-carousel.addEventListener('mousedown',function(ev){
-    //在图片上点击后获取鼠标的x,y坐标
-    var startX = ev.clientX;
-    var startY = ev.clientY;
+    carousel.addEventListener('mousedown',function(ev){
+        //在图片上点击后获取鼠标的x,y坐标
+        var startX = ev.clientX;
+        var startY = ev.clientY;
 
-    document.addEventListener('mouseup',function(ev){
-        //鼠标抬起后获取鼠标的x,y坐标
-        var disX = (startX - ev.clientX);
-        var disY = (startY - ev.clientY);
+        //鼠标抬起后获取鼠标的x,y 与之前的x,y坐标的差值
+        // document.onmouseup = function(ev){
+        document.addEventListener('mouseup',function(ev){
+            var endX = ev.clientX;
+            var endY = ev.clientY;
 
-        if(disX === disY) return;
+            var disX = ( endX - startX);
+            var disY = ( endY - startY);
 
-        if(Math.abs(disX) > Math.abs(disY)){ //横向运动
-            if(disX < 0){ //向右运动 = 右键
-                moveImg('left',w);
-            }else{ //向左运动 = 左键
-                moveImg('left',-w);
+            console.log('startX: '+startX);
+            console.log('endX: '+endX);
+
+            console.log('startY: '+startY);
+            console.log('endY: '+endY);
+
+            if(disX===0 && disY===0) return;
+
+            if(Math.abs(disX) > Math.abs(disY)){ //横向运动
+                if(disX > 0){ //向右运动 = 右键
+                    moveImg('left',w);
+                }else{ //向左运动 = 左键
+                    moveImg('left',-w);
+                }
             }
-        }
 
-        if(Math.abs(disY) > Math.abs(disX)){ //纵向运动
-            if(disY < 0){ //向下运动 = 下键
-                moveImg('top', h);
-            }else{ //向上运动 = 上键
-                moveImg('top', -h);
+            if(Math.abs(disY) > Math.abs(disX)){ //纵向运动
+                if(disY > 0){ //向下运动 = 下键
+                    moveImg('top', h);
+                }else{ //向上运动 = 上键
+                    moveImg('top', -h);
+                }
             }
-        }
+        });
 
+        ev.preventDefault();
     });
 
 
-    //阻止鼠标的默认onmousedown事件
-    ev.preventDefault();
-});
 
 
 
