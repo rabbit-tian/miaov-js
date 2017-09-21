@@ -36,7 +36,6 @@
     background-color: #00ffea;
     cursor: pointer;
     position: absolute;
-    top: 20px;
 }
 
 .btn-box{
@@ -44,16 +43,12 @@
     height: 20px;
     position: absolute;
     right: 0;
-}
-
-.btn-box input{
-    width: 20px;
-    height: 20px;
     background-color: lavender;
+    cursor: pointer;
 }
 
 .up-btn{
-    top: 0;
+    top: -20px;
 }
 
 .up-triangle{
@@ -67,7 +62,7 @@
 }
 
 .down-btn{
-    bottom:0;
+    bottom:-20px;
 }
 
 .down-triangle{

@@ -4,8 +4,12 @@ var slider = document.querySelector('.slider');
 var contentBox = document.querySelector('.content');
 var content = document.querySelector('.content p');
 
-var btnUp = document.querySelector('.up-btn input');
-var btnDown = document.querySelector('.down-btn input');
+var btnUp = document.querySelector('.up-btn');
+var btnDown = document.querySelector('.down-btn');
+
+//初始化scroll-bar的高度
+scrollBar.style.height = contentBox.offsetHeight - btnUp.offsetHeight - btnDown.offsetHeight + 'px';
+scrollBar.style.top = btnUp.offsetHeight + 'px';
 
 //计算出比例
 var ratio = contentBox.clientHeight/content.scrollHeight;
@@ -20,6 +24,7 @@ var maxContentH = content.scrollHeight - contentBox.clientHeight; //内容可滚
 
 //初始化滚动速度
 var speed = 10;
+
 
 scroll({
     obj:box,
