@@ -380,3 +380,11 @@ function scroll(option){
 }
 
 
+//递归找到特定父级的方法//★★★★★★★★★★
+function find(ele,name){
+    if(ele != null && ele.nodeName.toLocaleLowerCase() != name){
+        return find(ele.parentNode);
+    }else{
+        return parent;
+    }
+}
