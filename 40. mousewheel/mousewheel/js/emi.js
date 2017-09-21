@@ -357,6 +357,8 @@ function scroll(option){
                 option.down(ev);
             }
         }
+        //阻止滚动条默认行为
+        return false;
     };
 
     option.obj.addEventListener('DOMMouseScroll',function(ev){
@@ -371,7 +373,8 @@ function scroll(option){
                 option.down(ev);
             }
         }
+        //阻止滚动条默认行为
+        ev.preventDefault();
+
     },false);
 }
-
-
