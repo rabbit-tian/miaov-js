@@ -54,17 +54,13 @@ window.onload = function(){
         var timer = null;
         var n = 0;
         clearInterval(timer);
-        console.log('autoplay clean1 '+ timer);
-        //init(index);
 
         timer = setInterval(function(){
             rotate360(index,dir);
-            console.log('autoPlay '+ timer);
             n++;
 
             if(n==time){
                 clearInterval(timer);
-                console.log('autoplay clean2 '+ timer);
             }
         },3600);
     }
@@ -74,7 +70,6 @@ window.onload = function(){
         var addDeg = 2;
         var s = 0;
         var timer = null;
-        console.log('rotate360 '+timer);
 
         timer= setInterval(function () {
             init(index);
@@ -85,10 +80,8 @@ window.onload = function(){
                 uls[i].style.transform = uls[i].style.transform + dir + '(' + s + 'deg)';
             }
 
-            console.log('rotate360 '+timer);
             if(s == 360){
                 clearInterval(timer);
-                console.log('rotate360 clean '+timer);
             }
 
         }, 20);
@@ -310,7 +303,7 @@ window.onload = function(){
             setTransition0();
         },1500);
 
-        cube.className = 'cube set'; //只有表面才有颜色，内部为灰色
+        // cube.className = 'cube set'; //只有表面才有颜色，内部为灰色
     }
 
     // 将每个方块的transition设置为0；
