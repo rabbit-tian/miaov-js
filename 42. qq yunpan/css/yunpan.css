@@ -135,7 +135,7 @@
     position: absolute;
     right: -2px;
     top: -2px;
-    z-index: 999;
+    /*z-index: 999;*/
 }
 
 .icon-checkall{
@@ -1016,11 +1016,12 @@
 }
 
 .dirbox-tree a {
-    padding: 3px 0;
-    padding-right: 15px;
+    padding: 3px 15px 3px 0;
     white-space: nowrap;
     border: 1px solid #FFF;
     color: #000;
+    display: inline-block;
+    font-size: 13px;
 }
 
 .dirbox-tree .ui-text {
@@ -1038,7 +1039,7 @@
     height: 18px;
     left: 16px;
     top: 0;
-    background-image: url("../img/sprite-main.png");
+    background-image: url("../img/sprite-welcome.png");
     background-position: 0 -353px;
 }
 
@@ -1050,11 +1051,22 @@
     display: block;
     width: 16px;
     height: 16px;
-    background-image: url("../img/sprite-main.png");
     background-position: -207px -353px;
     opacity: .8;
 }
 
 .dirbox-tree .expand i {
     background-position: -241px -353px;
+}
+
+.dir-item a{
+    display: block;
+}
+
+.dir-item{
+    padding-left: 20px;
+}
+
+.dir-item a:hover{
+    background: #e9f5ff;
 }

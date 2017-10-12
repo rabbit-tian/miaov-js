@@ -9,6 +9,9 @@ var globalRoute = defaultRoute;
 //全局checkedArr，用来存储选中状态的元素
 var checkedArr = [];
 
+//全局moveToRoute,要移动到的位置
+var moveToRoute = '';
+
 countHeight(); //计算页面内容高度
 
 createAside(); //生成左侧菜单栏
@@ -214,8 +217,9 @@ function bindClickEvent(newEle){
 
         };
 
-        //阻止checkbox的冒泡
-        item.onmousedown = function(ev){
+        //阻止checkbox的冒泡,而不是阻止item的冒泡!! 否则在item上不能执行框选
+        var checkbox = item.querySelector('.icon-check');
+        checkbox.onmousedown = function(ev){
             ev.cancelBubble = true;
             ev.stopPropagation();
         }
@@ -437,6 +441,7 @@ function drag(){
 
     document.onmouseup = function(){
         document.onmousemove = null;
+        document.onmouseup = null;
         dragBox.classList.add('hidden');
 
         dragBox.style.width = 0;
@@ -590,7 +595,9 @@ function folderOperation(){
     for(let item of moveBtns){
         item.onclick = function(){
             var popup = document.querySelector('.move-file-pop');
-            showPopup(popup,moveFileDom);
+            showPopup(popup,moveFileDom,function(){
+                createDirTree(globalRoute);
+            });
         };
 
         item.onmousedown = function(ev){
@@ -722,6 +729,13 @@ function removeFileData(){
         }
     }
 
+    for(let i = 0; i < children.length; i++){
+        children[i].id = i;
+        children[i].route = globalRoute+'_'+i;
+        files[i].dataset.route = children[i].route
+    }
+
+    console.log(data);
 }
 
 
@@ -801,8 +815,9 @@ function renameFileData(arr){
 
 //移动文件
 function moveFileDom(){
-    var moveFilePop = document.querySelector('.move-file-pop');
-    moveFilePop.classList.remove('hidden');
+    toMove(toRoute);
+    modal.style.display = 'none';
+    showContent(currList.content.child);
 }
 
 //点击右键
@@ -822,18 +837,18 @@ function rightClick(){
 
             var item = findParentEle(ev.target,'className','file');
 
-
-
             if(!item.ischeck){
                 reset(false);
                 item.ischeck = true;
                 item.classList.add('act');
                 checkedArr.push(item);
+                showEditMode();
             }
         }
 
         ev.stopPropagation();
         ev.cancelBubble = true;
+
         return false;
     };
 
@@ -844,7 +859,7 @@ function rightClick(){
 }
 
 //显示弹出层
-function showPopup(obj,fn){
+function showPopup(obj,fn1,fn2){
     var ok = obj.querySelector('._ok');
     var close = obj.querySelectorAll('._x');
     var mask = document.querySelector('.ui-mask');
@@ -854,7 +869,7 @@ function showPopup(obj,fn){
         obj.classList.add('hidden');
         mask.classList.add('hidden');
 
-        fn&&fn();
+        fn1&&fn1();
     };
 
     ok.onmousedown = function(ev){
@@ -873,5 +888,69 @@ function showPopup(obj,fn){
 
     mask.classList.remove('hidden');
 
+    fn2&&fn2();
+
     centerPopup([obj]);
+}
+
+
+//移动到弹出层列表结构生成
+function createDirTree(route,node){
+
+    var dirRoot = document.querySelector('.root');
+
+    if(!arguments[1]){
+        node = dirRoot;
+    }
+
+    let [,children] = findDataByRoute(route);
+
+    let subTree = document.createElement('ul');
+    subTree.className = 'sub-tree';
+
+    let dirTreeHtml = '';
+
+    for(let item of children){
+        dirTreeHtml+=`<li class="dir-item" data-route="${item.route}">
+                        <a href="#" class="expand">
+                            <span class="ui-text">
+                                <i class="icon-welcome expander"></i>${item.title}
+                            </span>
+                        </a>
+                    </li>`;
+    }
+
+    subTree.innerHTML = dirTreeHtml;
+
+    node.appendChild(subTree);
+
+    let dirItems = node.querySelectorAll('.dir-item');
+
+    for(let item of dirItems){
+        item.onclick = function(ev){
+            let ul = item.querySelector('.sub-tree');
+            let arrow = item.querySelector('a');
+            if(!ul){
+                createDirTree(this.dataset.route,this);
+                toRoute = this.getAttribute('data-route');
+                this.isclick = true;
+            }else{
+                if(this.isclick){
+                    ul.classList.add('hidden');
+                    arrow.classList.add('expand');
+                    this.classList.add('active');
+                    this.isclick = false;
+                }else{
+                    ul.classList.remove('hidden');
+                    arrow.classList.remove('expand');
+                    this.classList.remove('active');
+                    this.isclick = true;
+                }
+            }
+
+            ev.cancelBubble = true;
+            ev.stopPropagation();
+        };
+    }
+
 }
