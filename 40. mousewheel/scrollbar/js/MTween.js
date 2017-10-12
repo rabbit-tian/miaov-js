@@ -196,3 +196,8 @@ function shake(obj,attr,s,d){
         obj.style[attr] = currSite+arr[m]+'px';
     },30)
 }
+
+//获取元素属性
+function getCss(obj,attr){
+    return parseFloat(getComputedStyle(obj)[attr]);
+}
