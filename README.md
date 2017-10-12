@@ -1,5 +1,5 @@
 # miaov-js
-#### js practice from [miaov](http://www.miaov.com/) training (2017.7.24 - ) :calendar:
+#### 妙味 js练习 [miaov](http://www.miaov.com/) training (2017.7.24 - ) :calendar:
 
 #### Project introduction:
 * :open_file_folder: 1.**div属性设置**  JS入门: 声明变量, 字符串拼接，属性操作 (2017.7.24)
